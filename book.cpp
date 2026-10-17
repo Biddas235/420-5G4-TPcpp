@@ -1,4 +1,5 @@
 #include "book.h"
+#include <sstream>
 
 //Constructeur
 
@@ -64,9 +65,22 @@ void Book::returnBook() {
 string Book::toString() const {return "Titre :" + title + "\n" + "Auteur :" + author + "\n" 
     + "ISBN :" + isbn + "\n" + 
     "Statu :" + (isAvailable ? "Disponible" : "Emprunté par " + borrowerId) + 
-    "\n" + "Emprunteur :" + borrowerId;}
+    "\n" + "Emprunteur :" + borrowerId;
+}
 
+string Book::toFileFormat() const {
+    return title + "|" + author + "|" + isbn + "|" + (isAvailable ? "1" : "0") + "|" + borrowerId;
+}
 
-string Book::toFileFormat() const {return "";}
-void Book::fromFileFormat(const string& line) {}
+void Book::fromFileFormat(const string& line) {
+    stringstream ss(line);
+    string avaibleStr;
+
+    getline(ss, title, '|');
+    getline(ss, author, '|');
+    getline(ss, isbn, '|');
+    getline(ss, avaibleStr, '|');
+    getline(ss, borrowerId, '|');
+    isAvailable = (avaibleStr == "1");
+}
 
