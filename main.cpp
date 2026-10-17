@@ -78,6 +78,8 @@ int main(int argc, char* argv[]) {
         }
         booksFile = (filesystem::path(dataDir) / "books.txt").string();
         usersFile = (filesystem::path(dataDir) / "users.txt").string();
+    }else {
+            cout << "Répertoire de données non spécifié, rien ne sera sauvegardé";
     }
 
     Library library;
@@ -249,6 +251,10 @@ int main(int argc, char* argv[]) {
             }
             
             case 0: // Exit
+                if (dataDir.empty()){
+                    cout << "Aucun répertoire de données spécifié. Les données ne seront pas sauvegardées.\n";
+                    return 0;
+                }
                 cout << "Sauvegarde des données avant la fermeture...\n";
                 fileManager.saveLibraryData(library);
                 cout << "Merci d'avoir utilisé le Système de Gestion de Bibliothèque Personnelle !\n";
