@@ -62,10 +62,9 @@ void Book::returnBook() {
     this -> setBorrowerId("");
 }
 
-string Book::toString() const {return "Titre :" + title + "\n" + "Auteur :" + author + "\n" 
-    + "ISBN :" + isbn + "\n" + 
-    "Statu :" + (isAvailable ? "Disponible" : "Emprunté par " + borrowerId) + 
-    "\n" + "Emprunteur :" + borrowerId;
+string Book::toString() const {return "Titre: " + title + "\n" + "Auteur: " + author + "\n" 
+    + "ISBN: " + isbn + "\n" + 
+    "Statut: " + (isAvailable ? "Disponible" : "Emprunté par " + borrowerId);
 }
 
 string Book::toFileFormat() const {
