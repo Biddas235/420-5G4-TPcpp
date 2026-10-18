@@ -152,6 +152,10 @@ void Library::displayAllBooks() {
         cout << "Aucun livre dans la bibliothèque.\n";
         return;
     }
+
+    sort(books.begin(), books.end(), [](const unique_ptr<Book>& a, const unique_ptr<Book>& b) {
+        return a->getTitle() < b->getTitle();
+    });
     
     cout << "\n=== TOUS LES LIVRES ===\n";
     for (size_t i = 0; i < books.size(); ++i) {
@@ -159,6 +163,15 @@ void Library::displayAllBooks() {
         cout << books[i]->toString() << "\n";
         cout << "-------------------------\n";
     }
+}
+
+bool Library::idDisponible(const string& userId) const {
+    auto it = find_if(users.begin(), users.end(),
+        [&userId](const unique_ptr<User>& user) {
+            return user->getUserId() == userId;
+        });
+    
+    return it == users.end(); 
 }
 
 // Display available books
