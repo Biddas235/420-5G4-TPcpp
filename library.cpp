@@ -192,6 +192,9 @@ void Library::displayAllBooks() {
     }
 
     sort(books.begin(), books.end(), [](const unique_ptr<Book>& a, const unique_ptr<Book>& b) {
+        if (a->getTitle() == b->getTitle()) {
+            return a->getAuthor() < b->getAuthor();
+        }
         return a->getTitle() < b->getTitle();
     });
     
