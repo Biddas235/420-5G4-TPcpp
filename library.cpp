@@ -115,6 +115,44 @@ vector<User*> Library::getAllUsers() {
     return allUsers;
 }
 
+string Library::generateNextUserId(){
+    int maxNumber = 0;
+
+    for(auto& user : users){
+        string id =  user->getUserId();
+
+        if(id.size() > 3 && id.substr(0, 3) == "USR"){
+            string idPart = id.substr(3);
+
+            bool estChiffre = true;
+
+            for (char c : idPart) {
+                if (c < '0' || c > '9') {
+                    estChiffre = false;
+                }
+            }
+
+            if(estChiffre){
+                int number = stoi(idPart);
+                if (number > maxNumber) {
+                    maxNumber = number;
+                }
+            }
+        }
+    }
+
+    int nextNumber = maxNumber + 1;
+    string numberText = to_string(nextNumber);
+
+    if (nextNumber < 10) {
+        numberText = "00" + numberText;
+    } else if (nextNumber < 100) {
+        numberText = "0" + numberText;
+    }
+
+    return "USR" + numberText;
+}
+
 // Check out book
 bool Library::checkOutBook(const string& isbn, const string& userId) {
     Book* book = findBookByISBN(isbn);
@@ -163,15 +201,6 @@ void Library::displayAllBooks() {
         cout << books[i]->toString() << "\n";
         cout << "-------------------------\n";
     }
-}
-
-bool Library::idDisponible(const string& userId) const {
-    auto it = find_if(users.begin(), users.end(),
-        [&userId](const unique_ptr<User>& user) {
-            return user->getUserId() == userId;
-        });
-    
-    return it == users.end(); 
 }
 
 // Display available books
