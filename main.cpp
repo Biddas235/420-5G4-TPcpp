@@ -216,7 +216,9 @@ int main(int argc, char* argv[]) {
                 
                 if (library.checkOutBook(isbn, userId)) {
                     cout << "Livre emprunté avec succès !\n";
-                    journal.log("EMPRUNT", library.findBookByISBN(isbn)->toFileFormat());
+                    Book* book = library.findBookByISBN(isbn);
+                    User* user = library.findUserById(userId);
+                    journal.log("EMPRUNT", book->getTitle() + "|" + book->getAuthor() + "|" + book->getISBN() + "|0|" + user->getName());
                 } else {
                     cout << "Erreur : Impossible d'emprunter le livre. Vérifiez l'ISBN, l'ID utilisateur et la disponibilité du livre.\n";
                 }
